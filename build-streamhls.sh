@@ -32,6 +32,9 @@ echo ""
 cmake -G "${CMAKE_GENERATOR}" .. \
   -DMLIR_DIR=${LLVM_PRJ_PATH}/build/lib/cmake/mlir \
   -DLLVM_DIR=${LLVM_PRJ_PATH}/build/lib/cmake/llvm \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
+  -DCMAKE_CXX_STANDARD=17
 
 # Run building.
 if [ "${CMAKE_GENERATOR}" == "Ninja" ]; then
