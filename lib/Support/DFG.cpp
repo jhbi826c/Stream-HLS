@@ -15,6 +15,7 @@
 #include <chrono>
 #include <ctime>
 #include "streamhls/Support/DFG.h"
+#include "mlir/Dialect/Arith/IR/Arith.h"
 #include "streamhls/Support/AffineMemAccess.h"
 #include "streamhls/Support/Utils.h"
 // #include "gurobi_c++.h"
@@ -1712,6 +1713,9 @@ LogicalResult DFG::populateNodeInfo(bool enablePermutations){
       }
       if(isa<arith::MulFOp>(op)){
         node.DSP_factor += 3;
+      }
+      if(isa<arith::MulIOp>(op)) {
+        node.DSP_factor += op->getResultTypes().front().getIntOrFloatBitWidth() / 8;
       }
     });
     // collect stores and loads

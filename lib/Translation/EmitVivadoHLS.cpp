@@ -11,6 +11,7 @@
  * https://opensource.org/licenses/MIT
  */
 #include "streamhls/Translation/EmitVivadoHLS.h"
+#include "mlir/Dialect/Arith/IR/Arith.h"
 #include "streamhls/Translation/Visitor.h"
 #include "streamhls/Translation/Utils.h"
 #include "streamhls/Support/Utils.h"
@@ -420,16 +421,22 @@ public:
   bool visitOp(arith::DivUIOp op) { return emitter.emitBinary(op, "/"), true; }
   bool visitOp(arith::RemUIOp op) { return emitter.emitBinary(op, "%"), true; }
   bool visitOp(arith::MaxSIOp op) {
-    return emitter.emitMaxMin(op, "max"), true;
+    return emitter.emitMaxMin(op, "std::max"), true;
   }
   bool visitOp(arith::MinSIOp op) {
-    return emitter.emitMaxMin(op, "min"), true;
+    return emitter.emitMaxMin(op, "std::min"), true;
   }
   bool visitOp(arith::MaxUIOp op) {
-    return emitter.emitMaxMin(op, "max"), true;
+    return emitter.emitMaxMin(op, "std::max"), true;
   }
   bool visitOp(arith::MinUIOp op) {
-    return emitter.emitMaxMin(op, "min"), true;
+    return emitter.emitMaxMin(op, "std::min"), true;
+  }
+  bool visitOp(arith::MaximumFOp op) {
+    return emitter.emitMaxMin(op, "hls::fmax"), true;
+  }
+  bool visitOp(arith::MinimumFOp op) {
+    return emitter.emitMaxMin(op, "hls::fmin"), true;
   }
 
   /// Logical expressions.
@@ -468,9 +475,6 @@ public:
   }
   bool visitOp(math::ErfOp op) { return emitter.emitUnary(op, "erf"), true; }
   bool visitOp(arith::NegFOp op) { return emitter.emitUnary(op, "-"), true; }
-  bool visitOp(arith::MaximumFOp op) {
-    return emitter.emitMaxMin(op, "fmax"), true;
-  }
   /// Special operations.
   bool visitOp(func::CallOp op) { return emitter.emitCall(op), true; }
   bool visitOp(func::ReturnOp op) { return emitter.emitReturnOp(op), true; }
@@ -2580,6 +2584,7 @@ void ModuleEmitter::emitModule(ModuleOp module) {
 //===----------------------------------------------------------------------===//
 #include <hls_stream.h>
 #include <hls_half.h>
+#include <algorithm>
 #include <cassert>
 #include <hls_math.h>
 #include <stdint.h>
