@@ -57,7 +57,7 @@ public:
             math::AbsFOp, math::AbsIOp, math::CeilOp, math::CosOp, math::SinOp,
             math::TanhOp, math::SqrtOp, math::RsqrtOp, math::ExpOp,
             math::Exp2Op, math::PowFOp, math::LogOp, math::Log2Op,
-            math::Log10Op, math::ErfOp, arith::NegFOp, arith::MaximumFOp,
+            math::Log10Op, math::ErfOp, arith::NegFOp,
             // Float binary expressions.
             arith::CmpFOp, arith::AddFOp, arith::SubFOp, arith::MulFOp,
             arith::DivFOp, arith::RemFOp,
@@ -65,6 +65,7 @@ public:
             arith::CmpIOp, arith::AddIOp, arith::SubIOp, arith::MulIOp,
             arith::DivSIOp, arith::RemSIOp, arith::DivUIOp, arith::RemUIOp,
             arith::MaxSIOp, arith::MinSIOp, arith::MaxUIOp, arith::MinUIOp,
+            arith::MaximumFOp, arith::MinimumFOp,
             // Logical expressions.
             arith::XOrIOp, arith::AndIOp, arith::OrIOp, arith::ShLIOp,
             arith::ShRSIOp, arith::ShRUIOp,
@@ -173,7 +174,6 @@ public:
   HANDLE(math::Log10Op);
   HANDLE(math::ErfOp);
   HANDLE(arith::NegFOp);
-  HANDLE(arith::MaximumFOp);
 
   // Float binary expressions.
   HANDLE(arith::CmpFOp);
@@ -196,6 +196,8 @@ public:
   HANDLE(arith::MinSIOp);
   HANDLE(arith::MaxUIOp);
   HANDLE(arith::MinUIOp);
+  HANDLE(arith::MaximumFOp);
+  HANDLE(arith::MinimumFOp);
 
   // Bit operations.
   HANDLE(arith::XOrIOp);
