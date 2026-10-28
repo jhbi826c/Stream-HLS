@@ -10,8 +10,9 @@ class FeedForward(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(self, x):
-        x = self.dropout(self.relu(self.fc1(x)))
-        x = self.fc2(x)
+        # x = self.dropout(self.relu(self.fc1(x)))
+        # x = self.fc2(x)
+        x = self.fc1(x)
         return x
 
 # # Example usage
