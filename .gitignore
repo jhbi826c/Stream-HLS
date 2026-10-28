@@ -5,3 +5,6 @@ __pycache__
 *.log
 .python-version
 .vscode
+.cache/
+.DS_Store
+/examples/designs/
